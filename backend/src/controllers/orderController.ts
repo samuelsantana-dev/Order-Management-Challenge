@@ -1,5 +1,5 @@
-import { OrderModel } from "../models/order";
-import { Order } from "../enums/order";
+import { OrderModel } from "../config/models/order";
+import { Order } from "../types/enum";
 import { Request, Response } from "express";
 
 export const createOrder = async (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ export const createOrder = async (req: Request, res: Response) => {
     patient,
     customer,
     services
-  });
+  });                   
 
   res.json(order);
 };

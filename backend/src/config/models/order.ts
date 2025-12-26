@@ -1,9 +1,10 @@
 import { Schema, model } from "mongoose";
+import { Order, Status } from "../../types/enum";
 
 const ServiceSchema = new Schema({
   name: { type: String, required: true },
   value: { type: Number, required: true },
-  status: { type: String, enum: ["PENDING", "DONE"], default: "PENDING" }
+  status: { type: String, enum: [Status.PENDING, Status.DONE], default: Status.PENDING }
 });
 
 const OrderSchema = new Schema(
@@ -14,14 +15,14 @@ const OrderSchema = new Schema(
 
     state: {
       type: String,
-      enum: ["CREATED", "ANALYSIS", "COMPLETED"],
-      default: "CREATED"
+      enum: [Order.CREATED, Order.ANALYSIS, Order.COMPLETED],
+      default: Order.CREATED,
     },
 
     status: {
       type: String,
-      enum: ["ACTIVE", "DELETED"],
-      default: "ACTIVE"
+      enum: [Status.ACTIVE, Status.DELETED],
+      default: Status.ACTIVE
     },
 
     services: {
