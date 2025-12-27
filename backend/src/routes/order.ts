@@ -12,4 +12,4 @@ orderRoutes.use(authMiddleware);
 
 orderRoutes.post("/create/", createOrder);
 orderRoutes.get("/list/", listOrders);
-orderRoutes.patch("/orders/:id/advance", advanceOrder);
+orderRoutes.patch("/:id/advance", advanceOrder);

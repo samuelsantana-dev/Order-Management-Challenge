@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Order, Status } from "../../types/enum";
+import { Order, Status } from "../utils/enum/order";
 
 const ServiceSchema = new Schema({
   name: { type: String, required: true },

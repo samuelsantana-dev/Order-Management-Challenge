@@ -1,5 +1,5 @@
 import { OrderRepository } from "../repositories/order.repository";
-import { Order } from "../types/enum";
+import { Order } from "../config/utils/enum/order";
 
 export class OrderService {
   private repo = new OrderRepository();
