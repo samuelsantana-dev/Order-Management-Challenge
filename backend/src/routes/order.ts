@@ -4,7 +4,7 @@ import {
   createOrder,
   listOrders,
   advanceOrder
-} from "../controllers/orderController";
+} from "../controllers/order.controller";
 
 export const orderRoutes = Router();
 
