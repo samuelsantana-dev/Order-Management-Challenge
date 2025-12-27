@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Order, Status } from "../utils/enum/order";
+import { OrderState, Status } from "../utils/enum/order";
 
 const ServiceSchema = new Schema({
   name: { type: String, required: true },
@@ -15,8 +15,8 @@ const OrderSchema = new Schema(
 
     state: {
       type: String,
-      enum: [Order.CREATED, Order.ANALYSIS, Order.COMPLETED],
-      default: Order.CREATED,
+      enum: [OrderState.CREATED, OrderState.ANALYSIS, OrderState.COMPLETED],
+      default: OrderState.CREATED,
     },
 
     status: {

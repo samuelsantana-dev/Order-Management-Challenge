@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { LoginError } from "../errors/auth.error";
 import { AuthRepository } from "../repositories/auth.repository";
 
 export class AuthService {
@@ -18,10 +19,10 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const user = await this.repo.findByEmail(email);
-    if (!user) throw new Error("Usuário inválido");
+    if (!user) throw new LoginError("Usuário não encontrado.");
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) throw new Error("Senha incorreta");
+    if (!match) throw new LoginError("Senha incorreta.");
 
     const token = jwt.sign(
       {

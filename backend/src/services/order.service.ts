@@ -1,5 +1,5 @@
 import { OrderRepository } from "../repositories/order.repository";
-import { Order } from "../config/utils/enum/order";
+import { OrderState } from "../config/utils/enum/order";
 
 export class OrderService {
   private repo = new OrderRepository();
@@ -29,8 +29,8 @@ export class OrderService {
 
     if (!order) throw new Error("Pedido não encontrado");
 
-    const flow = [Order.CREATED, Order.ANALYSIS, Order.COMPLETED];
-    const currentIndex = flow.indexOf(order.state as Order);
+    const flow = [OrderState.CREATED, OrderState.ANALYSIS, OrderState.COMPLETED];
+    const currentIndex = flow.indexOf(order.state as OrderState);
 
     if (currentIndex === flow.length - 1)
       throw new Error("Pedido já está COMPLETED");
