@@ -1,10 +1,11 @@
 import { OrderRepository } from "../repositories/order.repository";
 import { OrderState } from "../config/utils/enum/order";
+import { OrderType, OrderListParams } from "../config/utils/types/order";
 
 export class OrderService {
   private repo = new OrderRepository();
 
-  async createOrder(data: any) {
+  async createOrder(data: OrderType) {
     const { services } = data;
 
     if (!services || services.length === 0)
@@ -16,12 +17,12 @@ export class OrderService {
 
     return this.repo.createOrder(data);
   }
-  
-  async listOrders(page: number, limit: number, state?: string) {
+
+  async listOrders({ page, limit, state }: OrderListParams) {
     const query: any = {};
     if (state) query.state = state;
 
-    return this.repo.listOrders(query, page, limit);
+    return this.repo.listOrders({query, page, limit});
   }
 
   async advanceOrder(id: string) {

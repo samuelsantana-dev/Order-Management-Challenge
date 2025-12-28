@@ -18,7 +18,7 @@ export const listOrders = async (req: Request, res: Response) => {
   const state = req.query.state as string || "";
 
   try {
-    const orders = await service.listOrders(page, limit, state);
+    const orders = await service.listOrders({page, limit, state});
     res.json({ message: "Pedidos listados com sucesso!", orders });
   } catch (error) {
     res.status(500).json({ error: "Erro no servidor" });
