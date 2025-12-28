@@ -8,4 +8,8 @@ export class AuthRepository {
     async createUser(data: { email: string; password: string }) {
         return UserModel.create(data);
     }
+
+    async deleteUser(id: string){
+        return UserModel.findByIdAndDelete(id);
+    }
 }

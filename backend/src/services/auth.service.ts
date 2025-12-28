@@ -42,4 +42,9 @@ export class AuthService {
     );
     return token;
   }
+
+  async deleteUser(id?: string){
+    if (!id) throw new LoginError("ID do usuário é obrigatório");
+    return this.repo.deleteUser(id);
+  }
 }

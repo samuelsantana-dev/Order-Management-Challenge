@@ -28,3 +28,20 @@ export const login = async (req: Request, res: Response) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await service.deleteUser(id);
+    res.json({ message: "Usuário deletado com sucesso!" });
+
+  } catch (err: any){
+    if (err instanceof AppError){
+      return res.status(err.statusCode).json({
+        error: err.message
+      })
+    }
+
+    res.status(400).json({ error: err.message });
+  }
+}

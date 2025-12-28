@@ -38,3 +38,13 @@ export const advanceOrder = async (req: Request, res: Response) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+export const deleteOrder = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await service.deleteOrderService(id);
+    res.json(result);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+};

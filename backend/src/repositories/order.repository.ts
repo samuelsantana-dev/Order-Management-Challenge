@@ -15,4 +15,8 @@ export class OrderRepository {
             .skip((page - 1) * limit)
             .limit(limit);
     }
+
+    async deleteById(id: string){
+        return OrderModel.findByIdAndDelete(id);
+    }
 }

@@ -46,4 +46,12 @@ export class OrderService {
       message: `Pedido avançaria de ${currentState} para ${nextState}`,
     };
   }
+
+  async deleteOrderService(id?: string){
+    if (!id) throw new Error("ID do pedido é obrigatório");
+    const order = await this.repo.findById(id);
+    if (!order) throw new Error("Pedido não encontrado");
+    await this.repo.deleteById(id);
+    return { message: "Pedido deletado com sucesso" };
+  }
 }
