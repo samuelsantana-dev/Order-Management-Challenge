@@ -35,14 +35,14 @@ export class OrderService {
     if (currentIndex === flow.length - 1)
       throw new Error("Pedido já está COMPLETED");
 
+    const currentState = order.state as OrderState;
     const nextState = flow[currentIndex + 1];
 
-    // Aqui você decide se quer apenas retornar OU salvar
-    // order.state = nextState;
-    // await order.save();
+    order.state = nextState as OrderState;
+    await order.save();
 
     return {
-      message: `Pedido avançaria de ${order.state} para ${nextState}`,
+      message: `Pedido avançaria de ${currentState} para ${nextState}`,
     };
   }
 }
