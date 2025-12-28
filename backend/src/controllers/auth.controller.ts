@@ -10,6 +10,11 @@ export const register = async (req: Request, res: Response) => {
     const user = await service.register({email, password});
     res.json({ message: "Usuário registrado com sucesso!", user });
   } catch (error) {
+    if (error instanceof AppError){
+      return res.status(error.statusCode).json({
+        error: error.message
+      })
+    }
     res.status(500).json({ error: "Erro no servidor" });
   }
 };
