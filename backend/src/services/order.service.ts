@@ -1,6 +1,7 @@
 import { OrderRepository } from "../repositories/order.repository";
 import { OrderState } from "../config/utils/enum/order";
 import { OrderType, OrderListParams } from "../config/utils/types/order";
+import { DatabaseError } from "../errors/database.error";
 
 export class OrderService {
   private repo = new OrderRepository();
@@ -9,11 +10,11 @@ export class OrderService {
     const { services } = data;
 
     if (!services || services.length === 0)
-      throw new Error("Serviços obrigatórios");
+      throw new DatabaseError("Serviços obrigatórios");
 
     const total = services.reduce((sum: number, s: any) => sum + s.value, 0);
     if (total === 0)
-      throw new Error("Valor total não pode ser zero");
+      throw new DatabaseError("Valor total não pode ser zero");
 
     return this.repo.createOrder(data);
   }
@@ -28,13 +29,13 @@ export class OrderService {
   async advanceOrder(id: string) {
     const order = await this.repo.findById(id);
 
-    if (!order) throw new Error("Pedido não encontrado");
+    if (!order) throw new DatabaseError("Pedido não encontrado");
 
     const flow = [OrderState.CREATED, OrderState.ANALYSIS, OrderState.COMPLETED];
     const currentIndex = flow.indexOf(order.state as OrderState);
 
     if (currentIndex === flow.length - 1)
-      throw new Error("Pedido já está COMPLETED");
+      throw new DatabaseError("Pedido já está COMPLETED");
 
     const currentState = order.state as OrderState;
     const nextState = flow[currentIndex + 1];
@@ -48,9 +49,9 @@ export class OrderService {
   }
 
   async deleteOrderService(id?: string){
-    if (!id) throw new Error("ID do pedido é obrigatório");
+    if (!id) throw new DatabaseError("ID do pedido é obrigatório");
     const order = await this.repo.findById(id);
-    if (!order) throw new Error("Pedido não encontrado");
+    if (!order) throw new DatabaseError("Pedido não encontrado");
     await this.repo.deleteById(id);
     return { message: "Pedido deletado com sucesso" };
   }

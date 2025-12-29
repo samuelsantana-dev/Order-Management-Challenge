@@ -1,3 +1,4 @@
+import { AppError } from "../errors/app.error";
 import { OrderService } from "../services/order.service";
 import { Request, Response } from "express";
 
@@ -8,6 +9,11 @@ export const createOrder = async (req: Request, res: Response) => {
     const order = await service.createOrder(req.body);
     res.json({ message: "Pedido criado com sucesso!", order });
   } catch (error) {
+     if (error instanceof AppError){
+      return res.status(error.statusCode).json({
+        error: error.message
+      })
+    }
     res.status(500).json({ error: "Erro no servidor" });
   }
 };
@@ -35,6 +41,11 @@ export const advanceOrder = async (req: Request, res: Response) => {
     const result = await service.advanceOrder(id);
     res.json(result);
   } catch (err: any) {
+     if (err instanceof AppError){
+          return res.status(err.statusCode).json({
+            error: err.message
+          })
+        }
     res.status(400).json({ error: err.message });
   }
 };
@@ -45,6 +56,11 @@ export const deleteOrder = async (req: Request, res: Response) => {
     const result = await service.deleteOrderService(id);
     res.json(result);
   } catch (err: any) {
+     if (err instanceof AppError){
+          return res.status(err.statusCode).json({
+            error: err.message
+          })
+        }
     res.status(400).json({ error: err.message });
   }
 };
