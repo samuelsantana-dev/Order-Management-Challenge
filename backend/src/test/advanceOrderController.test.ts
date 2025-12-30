@@ -7,7 +7,7 @@ vi.mock("../config/models/order", () => ({
     findById: vi.fn(),
   },
 }));
-
+const next = vi.fn();
 const mockResponse = () => {
   const res: any = {};
   res.status = vi.fn().mockReturnValue(res);
@@ -27,10 +27,10 @@ describe("advanceOrder Controller", () => {
 
     const req: any = { params: { id: "123" } };
     const res = mockResponse();
-
+    
     req.body = { forceNext: OrderState.COMPLETED };
 
-    await advanceOrder(req, res);
+    await advanceOrder(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
@@ -48,7 +48,7 @@ describe("advanceOrder Controller", () => {
 
     req.body = { forceNext: OrderState.CREATED };
 
-    await advanceOrder(req, res);
+    await advanceOrder(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
@@ -64,7 +64,7 @@ describe("advanceOrder Controller", () => {
     const req: any = { params: { id: "123" } };
     const res = mockResponse();
 
-    await advanceOrder(req, res);
+    await advanceOrder(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
@@ -80,7 +80,7 @@ describe("advanceOrder Controller", () => {
     const req: any = { params: { id: "123" } };
     const res = mockResponse();
 
-    await advanceOrder(req, res);
+    await advanceOrder(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
