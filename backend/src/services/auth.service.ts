@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { AuthPayload } from "../config/utils/types/auth";
 import { LoginError } from "../errors/auth.error";
 import { AuthRepository } from "../repositories/auth.repository";
-
+import { loginSchema, registerSchema } from "../config/utils/validations/auth";
 export class AuthService {
   private repo = new AuthRepository();
 
@@ -11,6 +11,9 @@ export class AuthService {
     if (!email || !password) {
      throw new LoginError("Email e senha são obrigatórios");
     }
+
+    registerSchema.parse({ email, password });
+    
     const exists = await this.repo.findByEmail(email);
     if (exists) throw new LoginError("Email ja cadastrado");
 
@@ -25,6 +28,8 @@ export class AuthService {
      if (!email || !password) {
      throw new LoginError("Email e senha são obrigatórios");
     }
+
+    loginSchema.parse({ email, password });
     const user = await this.repo.findByEmail(email);
     if (!user) throw new LoginError("Usuário não encontrado.");
 

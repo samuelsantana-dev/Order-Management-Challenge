@@ -1,66 +1,49 @@
-import { AppError } from "../errors/app.error";
 import { OrderService } from "../services/order.service";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 const service = new OrderService();
 
-export const createOrder = async (req: Request, res: Response) => {
+export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const order = await service.createOrder(req.body);
-    res.json({ message: "Pedido criado com sucesso!", order });
+    res.status(201).json({ message: "Pedido criado com sucesso!", order });
   } catch (error) {
-     if (error instanceof AppError){
-      return res.status(error.statusCode).json({
-        error: error.message
-      })
-    }
-    res.status(500).json({ error: "Erro no servidor" });
+    next(error);
   }
 };
 
-export const listOrders = async (req: Request, res: Response) => {
+export const listOrders = async (req: Request, res: Response, next: NextFunction) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
-  const state = req.query.state as string || "";
+  const state = (req.query.state as string) || "";
 
   try {
-    const orders = await service.listOrders({page, limit, state});
-    res.json({ message: "Pedidos listados com sucesso!", orders });
+    const orders = await service.listOrders({ page, limit, state });
+    res.status(200).json({ message: "Pedidos listados com sucesso!", orders });
   } catch (error) {
-    res.status(500).json({ error: "Erro no servidor" });
+    next(error);
   }
-
 };
 
-export const advanceOrder = async (req: Request, res: Response) => {
+export const advanceOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    if(!id) {
+    if (!id) {
       return res.status(400).json({ error: "ID do pedido é obrigatório" });
     }
     const result = await service.advanceOrder(id);
-    res.json(result);
-  } catch (err: any) {
-     if (err instanceof AppError){
-          return res.status(err.statusCode).json({
-            error: err.message
-          })
-        }
-    res.status(400).json({ error: err.message });
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
   }
 };
 
-export const deleteOrder = async (req: Request, res: Response) => {
+export const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const result = await service.deleteOrderService(id);
-    res.json(result);
-  } catch (err: any) {
-     if (err instanceof AppError){
-          return res.status(err.statusCode).json({
-            error: err.message
-          })
-        }
-    res.status(400).json({ error: err.message });
+    res.status(204).json(result);
+  } catch (err) {
+    next(err);
   }
 };
