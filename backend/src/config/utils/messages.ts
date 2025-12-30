@@ -10,6 +10,9 @@ export const messages = {
     user_not_found: "Usuário não encontrado",
     invalid_password_invalid: "Senha inválida",
     id_required: "ID do usuário é obrigatório",
+    login_failed: "Login falhou",
+    token_not_provided: "Token não fornecido",
+    token_invalid: "Token inválido",
   },
   orders: {
     invalidCredentials: "Email ou senha inválidos",

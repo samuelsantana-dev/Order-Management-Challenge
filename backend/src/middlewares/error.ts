@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors/app.error";
 import { ZodError } from "zod";
+import {messages} from "../config/utils/messages";
 
 export function ErrorMiddleware(
   err: unknown,
@@ -27,6 +28,6 @@ export function ErrorMiddleware(
   }
 
   return res.status(500).json({
-    error: "Erro no servidor",
+    error: messages.errors.internal_server_error,
   });
 }
