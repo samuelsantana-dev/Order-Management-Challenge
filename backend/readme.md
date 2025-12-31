@@ -1,4 +1,5 @@
 Repositorio do desafio: https://github.com/linkiodental/order-management-challenge
+Repostiorio Samuel Github: https://github.com/samuelsantana-dev/Order-Management-Challenge.git 
 # Order Management - Backend
 
 Este projeto é um backend em **Node.js + TypeScript**, organizado em uma arquitetura limpa e modular, contendo controllers, services, repositories, errors, middlewares e validações.
