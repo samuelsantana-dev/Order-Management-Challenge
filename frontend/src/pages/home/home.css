@@ -28,6 +28,7 @@ html, body {
   max-width: 800px;
   width: 100%;
   background: var(--card-bg);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1px solid var(--accent-border);
   border-radius: 16px;
